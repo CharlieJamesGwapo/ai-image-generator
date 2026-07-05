@@ -20,7 +20,7 @@ export default function FavoritesPage() {
     try {
       await copyToClipboard(prompt);
       setToastMessage('Copied to clipboard!');
-    } catch (error) {
+    } catch {
       setToastMessage('Failed to copy');
     }
   };

@@ -63,7 +63,7 @@ export default function GeneratorPage() {
           setPreviewImage(image);
           setPrompt('');
         },
-        onError: (error: any) => {
+        onError: (error) => {
           const errorMessage = error instanceof Error ? error.message : 'Failed to generate image';
           setToastMessage(errorMessage);
         },
@@ -75,7 +75,7 @@ export default function GeneratorPage() {
     try {
       await copyToClipboard(text);
       setToastMessage('Copied to clipboard!');
-    } catch (error) {
+    } catch {
       setToastMessage('Failed to copy');
     }
   };

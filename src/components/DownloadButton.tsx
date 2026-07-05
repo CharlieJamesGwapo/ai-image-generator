@@ -18,9 +18,8 @@ export function DownloadButton({ imageUrl, prompt, size = 'md' }: DownloadButton
       setIsDownloading(true);
       setError(null);
       await downloadImage(imageUrl, prompt);
-    } catch (err) {
+    } catch {
       setError('Download failed');
-      console.error(err);
     } finally {
       setIsDownloading(false);
     }

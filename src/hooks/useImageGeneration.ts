@@ -19,7 +19,7 @@ export function useImageGeneration() {
 
       if (model === 'dalle-3') {
         const dimensions = getAspectRatioDimensions(aspectRatio);
-        const size = `${dimensions.width}x${dimensions.height}` as const;
+        const size = `${dimensions.width}x${dimensions.height}` as '1024x1024' | '1792x1024' | '1024x1792';
 
         return dalleApi.generateImage(
           {

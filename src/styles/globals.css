@@ -16,7 +16,7 @@ body {
 }
 
 input, textarea, select, button {
-  @apply font-inherit;
+  font: inherit;
 }
 
 /* Scrollbar styling */

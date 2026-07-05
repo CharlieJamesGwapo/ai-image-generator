@@ -20,7 +20,7 @@ export const stabilityApi = {
   generateImage: async (
     params: StabilityGenerationParams,
     apiKey: string
-  ): Promise<{ imageUrl: string }> => {
+  ): Promise<{ imageUrl: string; revisedPrompt?: string }> => {
     if (!apiKey) {
       throw new Error('Stability AI API key not configured');
     }
@@ -49,14 +49,15 @@ export const stabilityApi = {
       const imageUrl = `data:image/png;base64,${base64}`;
 
       return { imageUrl };
-    } catch (error: any) {
-      if (error.response?.status === 401) {
+    } catch (error) {
+      const err = error as { response?: { status: number; data?: { message: string } } };
+      if (err.response?.status === 401) {
         throw new Error('Invalid Stability AI API key');
       }
-      if (error.response?.status === 429) {
+      if (err.response?.status === 429) {
         throw new Error('Rate limit exceeded. Please wait before generating again.');
       }
-      throw new Error(error.response?.data?.message || 'Failed to generate image with Stability AI');
+      throw new Error(err.response?.data?.message || 'Failed to generate image with Stability AI');
     }
   },
 };

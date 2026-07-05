@@ -30,6 +30,7 @@ export function ImagePreview({ image, onClose, onToggleFavorite, onCopyPrompt }:
         <div className="p-6 space-y-6">
           <div className="relative w-full">
             {image.imageUrl.startsWith('data:') ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img src={image.imageUrl} alt={image.prompt} className="w-full rounded-lg" />
             ) : (
               <Image
