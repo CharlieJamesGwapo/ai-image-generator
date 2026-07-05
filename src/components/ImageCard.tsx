@@ -18,6 +18,7 @@ export function ImageCard({ image, onPreview, onDelete, onToggleFavorite }: Imag
     <div className="group rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow">
       <div className="relative aspect-square cursor-pointer" onClick={() => onPreview(image)}>
         {image.imageUrl.startsWith('data:') ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={image.imageUrl}
             alt={image.prompt}

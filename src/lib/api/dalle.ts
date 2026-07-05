@@ -18,7 +18,7 @@ export const dalleApi = {
   generateImage: async (
     params: DalleGenerationParams,
     apiKey: string
-  ): Promise<{ imageUrl: string; revisedPrompt: string }> => {
+  ): Promise<{ imageUrl: string; revisedPrompt?: string }> => {
     if (!apiKey) {
       throw new Error('OpenAI API key not configured');
     }
@@ -45,14 +45,15 @@ export const dalleApi = {
         imageUrl: response.data.data[0].url,
         revisedPrompt: response.data.data[0].revised_prompt,
       };
-    } catch (error: any) {
-      if (error.response?.status === 401) {
+    } catch (error) {
+      const err = error as { response?: { status: number; data?: { error?: { message: string } } } };
+      if (err.response?.status === 401) {
         throw new Error('Invalid OpenAI API key');
       }
-      if (error.response?.status === 429) {
+      if (err.response?.status === 429) {
         throw new Error('Rate limit exceeded. Please wait before generating again.');
       }
-      throw new Error(error.response?.data?.error?.message || 'Failed to generate image with DALL-E 3');
+      throw new Error(err.response?.data?.error?.message || 'Failed to generate image with DALL-E 3');
     }
   },
 };
